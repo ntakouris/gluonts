@@ -23,7 +23,7 @@ from gluonts.zebras._util import pad_axis
 
 from ._base import FlatMapTransformation
 from .sampler import ContinuousTimePointSampler, InstanceSampler
-
+from datetime import timedelta
 
 class InstanceSplitter(FlatMapTransformation):
     """
@@ -147,7 +147,7 @@ class InstanceSplitter(FlatMapTransformation):
 
         entry[self._past(self.is_pad_field)] = pad_indicator
         entry[self.forecast_start_field] = (
-            entry[self.start_field] + idx + self.lead_time
+            entry[self.start_field] + timedelta(days=int(idx)) + timedelta(days=int(self.lead_time)) 
         )
 
         return entry
